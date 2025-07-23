@@ -1,0 +1,159 @@
+<!--This is a calculator program-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Calculator</title>
+    <style>
+        body {
+             background: linear-gradient(45deg, #56e6ff, #ff6b95);
+
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        
+        .calculator {
+            background: url('dog.avif') no-repeat center center fixed;
+            border-radius: 20px;
+            padding: 20px;
+            
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .display {
+            width: 100%;
+            height: 60px;
+            font-size: 24px;
+            text-align: right;
+            padding-center: 10px;
+            margin: 0;
+
+            border: none;
+            border-radius: 10px;
+            background: #f8f9fa;
+            margin-bottom: 20px;
+        }
+        
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        
+        button:hover {
+            transform: scale(0.95);
+        }
+        
+        .number {
+            background-color: #e9ecef;
+        }
+        
+        .operator {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .equals {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .clear {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .delete {
+            background-color: #ffc107;
+            color: white;
+        }
+        .palindrome-message {
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 24px; /* increase this as needed */
+    font-weight: bold;
+}
+
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" readonly>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="delete" onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            
+            <button class="number" onclick="appendToDisplay('7')">7</button>
+            <button class="number" onclick="appendToDisplay('8')">8</button>
+            <button class="number" onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            
+            <button class="number" onclick="appendToDisplay('4')">4</button>
+            <button class="number" onclick="appendToDisplay('5')">5</button>
+            <button class="number" onclick="appendToDisplay('6')">6</button>
+            <button class="equals" onclick="calculate()" rowspan="2">=</button>
+            
+            <button class="number" onclick="appendToDisplay('1')">1</button>
+            <button class="number" onclick="appendToDisplay('2')">2</button>
+            <button class="number" onclick="appendToDisplay('3')">3</button>
+            
+            <button class="number" onclick="appendToDisplay('0')" colspan="2">0</button>
+            <button class="number" onclick="appendToDisplay('.')">.</button>
+        </div>
+    </div>
+    <p id="palindromeMessage" style="color: white; text-align: center; margin-top: 15px;"></p>
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+        
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+        
+        function deleteLast() {
+            let currentDisplay = document.getElementById('display').value;
+            document.getElementById('display').value = currentDisplay.slice(0, -1);
+        }
+      function calculate() {
+    try {
+        let result = eval(document.getElementById('display').value);
+        document.getElementById('display').value = result;
+
+        // Palindrome check
+        let resultStr = result.toString();
+        let reversedStr = resultStr.split('').reverse().join('');
+        let messageElement = document.getElementById('palindromeMessage');
+
+        if (resultStr === reversedStr) {
+            messageElement.textContent = "✅ It is a palindrome!";
+            messageElement.style.color = "#28a745"; //green
+        } else {
+            messageElement.textContent = "❌ Not a palindrome.";
+            messageElement.style.color = "#dc3545"; // red
+        }
+
+    } catch (error) {
+        document.getElementById('display').value = 'Error';
+        document.getElementById('palindromeMessage').textContent = '';
+    }
+}
+  
+    </script>
+</body>
+</html>
